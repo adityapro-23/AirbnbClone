@@ -1,14 +1,16 @@
 <style>
 	.search-btn {
 		background-color: #fe424d;
+		/* background-color: #553265; */
 		color: #fff;
 		border-radius: 25px;
 		padding: 0 1rem 0 1rem;
 	}
 
 	.search-btn:hover {
-		background-color: #fe424d;
+		background-color: #db3742;
 		color: #fff;
+		transition: 0.3s ease-out;
 	}
 	
 	.search-btn i {
@@ -34,19 +36,35 @@
 				<a class="nav-link" href="/listings">Explore</a>
 			</div>
 			<div class="navbar-nav ms-auto">
-				<form class="d-flex" role="search">
-					<input class="form-control me-2 search-inp" type="search" placeholder="Search destinations">
+				<form class="d-flex" role="search" method="GET" action="/listings/results">
+					<input class="form-control me-2 search-inp" type="search" placeholder="Search destinations" name="search">	
 					<button class="btn search-btn" type="submit"><i class="fa-solid fa-magnifying-glass"></i>Search</button>
 				</form>
 			</div>
 			<div class="navbar-nav ms-auto">
 				<a class="nav-link" href="/listings/new">Airbnb your home</a>
-				<% if(!currUser) { %>
+				<% if(currUser) { %>
+					<div class="dropdown">
+						<a class="btn btn-secondary dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+							<img src="<%= currUser.profilePicture || '/default-profile.png' %>" class="profile-pic rounded-circle" alt="Profile">
+							<!-- <i class="fa-solid fa-user-circle" style="font-size: 1.5rem;"></i> -->
+						</a>
+						
+						<ul class="dropdown-menu dropdown-menu-end">
+						  <% if(currUser.role === "host") { %>
+							<li><a class="dropdown-item" href="/dashboard">Dashboard</a></li>
+						  <% } %>
+						  <li><a class="dropdown-item" href="/bookings">My Bookings</a></li>
+						  <li><a class="dropdown-item" href="/wishlist">Wishlist</a></li>
+						  <li><hr class="dropdown-divider"></li>
+						  <li><a class="dropdown-item" href="/help">Help Centre</a></li>
+						  <li><a class="dropdown-item" href="/logout">Logout</a></li>
+						</ul>
+					  </div>
+					
+				<% } else { %>
 					<a class="nav-link" href="/signup"><b>Sign up</b></a>
 					<a class="nav-link" href="/login"><b>Log in</b></a>
-				<% } %>
-				<% if(currUser) { %>
-					<a class="nav-link" href="/logout"><b>Log out</b></a>
 				<% } %>
 			</div>
 		</div>

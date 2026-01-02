@@ -1,61 +1,61 @@
 <% layout("/layouts/boilerplate") %>
 
 <div id="filters">
-    <div class="filter">
+    <div class="filter <%= selectedCategory === "Trending" ? "selectedCategory": "" %>">
         <a href="/listings/category/Trending">
             <div><i class="fa-solid fa-fire"></i></div>
             <p>Trending</p>
         </a>
     </div>
-    <div class="filter">
+    <div class="filter <%= selectedCategory === "Rooms" ? "filter selectedCategory": "" %>">
         <a href="/listings/category/Rooms">
             <div><i class="fa-solid fa-bed"></i></div>
             <p>Rooms</p>
         </a>
     </div>
-    <div class="filter">
+    <div class="filter <%= selectedCategory === "Iconic cities" ? "selectedCategory": "" %>">
         <a href="/listings/category/Iconic cities">
             <div><i class="fa-solid fa-mountain-city"></i></div>
             <p>Iconic cities</p>
         </a>
     </div>
-    <div class="filter">
+    <div class="filter <%= selectedCategory === "Mountains" ? "selectedCategory": "" %>">
         <a href="/listings/category/Mountains">
             <div><i class="fa-solid fa-mountain"></i></div>
             <p>Mountains</p>
         </a>
     </div>
-    <div class="filter">
+    <div class="filter <%= selectedCategory === "Castles" ? "selectedCategory": "" %>">
         <a href="/listings/category/Castles">
             <div><i class="fa-brands fa-fort-awesome"></i></div>
             <p>Castles</p>
         </a>
     </div>
-    <div class="filter">
+    <div class="filter <%= selectedCategory === "Amazing pools" ? "selectedCategory": "" %>">
         <a href="/listings/category/Amazing pools">
             <div><i class="fa-solid fa-person-swimming"></i></div>
             <p>Amazing pools</p>
         </a>
     </div>
-    <div class="filter">
+    <div class="filter <%= selectedCategory === "Camping" ? "selectedCategory": "" %>">
         <a href="/listings/category/Camping">
             <div><i class="fa-solid fa-campground"></i></div>
             <p>Camping</p>
         </a>
     </div>
-    <div class="filter">
+    <div class="filter <%= selectedCategory === "Farms" ? "selectedCategory": "" %>">
         <a href="/listings/category/Farms">
             <div><i class="fa-solid fa-cow"></i></div>
             <p>Farms</p>
         </a>
     </div>
-    <div class="filter">
+    <div class="filter <%= selectedCategory === "Arctic" ? "selectedCategory": "" %>">
         <a href="/listings/category/Arctic">
             <div><i class="fa-regular fa-snowflake"></i></div>
             <p>Arctic</p>
         </a>
     </div>
-    <div class="filter">
+    <div class="filter <%= selectedCategory === "Boats" ? "selectedCategory": "" %>">
         <a href="/listings/category/Boats">
             <div><i class="fa-solid fa-ship"></i></div>
             <p>Boats</p>
@@ -72,10 +72,10 @@
 </div>
 
 <div class="row row-cols-lg-3 row-cols-md-2 row-cols-sm-1 mt-3">
-    <% if(allListings.length === 0) { %>
+    <% if(filteredListings.length === 0) { %>
         <p style="margin: auto; width: 20%; font-size: larger;">No listings found!</p>
     <% } else { %>
-        <% for(let listing of allListings){ %>
+        <% for(let listing of filteredListings){ %>
             <a href="/listings/<%=listing._id%>" class="listing-link">
                 <div class="card col listing-card">
                     <% if (listing.isGuestFavourite) { %>

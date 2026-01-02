@@ -16,6 +16,7 @@ body {
 }
 
 .fa-compass {
+    /* color: #fe424d; */
     color: #fe424d;
     font-size: 2rem;
 }
@@ -23,6 +24,74 @@ body {
 .nav-link {
     color: #222222 !important;
 }
+
+.dropdown-toggle {
+    background-color: white !important;
+    color: #222222 !important;
+    border: none !important;
+    opacity: 0.7;
+}
+
+.dropdown-toggle:hover {
+    opacity: 1;
+    transition: 0.3s ease-in-out;
+}
+
+.profile-pic {
+    width: 2rem;
+    height: 2rem;
+    border-radius: 50%;
+}
+
+/* Categories */
+#filters {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.filter {
+    text-align: center;
+    margin-right: 2rem;
+    margin-top: 2rem;
+    opacity: 0.7;
+}
+
+.filter:hover {
+    opacity: 1;
+    cursor: pointer;
+    transition: 0.2s ease-in-out;
+}
+
+.selectedCategory {
+    opacity: 1;
+    font-weight: 800;
+    border-bottom: 2px solid black;
+}
+
+.filter p {
+    font-size: 0.8rem;
+}
+
+.filter a {
+    text-decoration: none;
+    color: #222222;
+}
+
+.tax-info {
+    display: none;
+}
+
+.tax-toggle {
+    border: 1px solid black;
+    border-radius: 1rem;
+    height: 3.2rem;
+    padding: 1rem;
+    margin-left: 0.75rem;
+    display: flex;
+    align-items: center;
+}
+
 
 /* Footer */
 .f-info-links a {
@@ -82,6 +151,16 @@ body {
     text-decoration: none;
 }
 
+/* Card category badge */
+.listing-card .badge {
+    position: absolute; 
+    right: 0.5rem; 
+    bottom: 3.5rem;
+    color: #222222;
+    background-color: #ecf5ff !important;
+}
+
+
 /* Card Effect */
 .card-img-overlay {
     opacity: 0;
@@ -96,6 +175,17 @@ body {
 .add-btn {
     background-color: #fe424d !important;
     border: none !important;
+}
+
+.category {
+    display: flex;
+    flex-wrap: wrap;
+    /* justify-content: space-between; */
+}
+
+.category label {
+    font-size: 0.8rem;
+    margin: 1rem 1rem 0 0;
 }
 
 /* Edit Page */
@@ -116,6 +206,18 @@ body {
 .show-card {
     padding-left: 0;
     padding-right: 0;
+}
+
+.bookAndWishBtnsContainer {
+    display: flex;
+}
+
+.showPageBtn {
+    background-color: white !important;
+    color: #fe424d !important;
+    border: none !important;
+    margin-right: 1rem;
+    border: 1px solid #fe424d !important;
 }
 
 /* Map */

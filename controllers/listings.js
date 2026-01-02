@@ -2,10 +2,12 @@ const Listing = require("../models/listing");
 const mbxGeocoding = require('@mapbox/mapbox-sdk/services/geocoding');
 const mapToken = process.env.MAP_TOKEN;
 const geocodingClient = mbxGeocoding({ accessToken: mapToken });
+const { setGuestFavouriteStatus } = require("../middleware");
 
 module.exports.index = async (req, res) => {
-    const allListings = await Listing.find({});
-    res.render("listings/index.ejs", { allListings });
+    const allListings = await Listing.find({}).populate("reviews");
+    setGuestFavouriteStatus(allListings);
+    res.render("listings/index.ejs", { allListings, currUser: req.user });
 };
 
 module.exports.renderNewForm = (req, res) => {
@@ -19,7 +21,7 @@ module.exports.showListing = async (req, res) => {
         req.flash("error", "Listing you requrested for does not exist!");
         res.redirect("/lisings");   
     }
-    res.render("listings/show.ejs", { listing });
+    res.render("listings/show.ejs", { listing, currUser: req.user });
 };
 
 module.exports.createListing = async (req, res, next) => {
@@ -32,6 +34,7 @@ module.exports.createListing = async (req, res, next) => {
     
     let url = req.file.path;
     let filename = req.file.filename;
+    const selectedCategories = req.body.listing.category || ["Rooms"];
     const newListing = new Listing(req.body.listing);
     newListing.owner = req.user._id;
     newListing.image = { url, filename };
@@ -56,6 +59,18 @@ module.exports.renderEditForm = async (req, res) => {
 module.exports.updateListing = async (req, res) => {
     let {id} = req.params;
     let listing = await Listing.findByIdAndUpdate(id, {...req.body.listing});
+    
+    if(listing.location != req.body.listing.location){
+        let response = await geocodingClient
+        .forwardGeocode({
+            query: req.body.listing.location,
+            limit: 1,
+        })
+        .send()
+        listing.location = req.body.listing.location;
+        listing.geometry.coordinates = response.body.features[0].geometry.coordinates;
+        await listing.save();
+    }
     if(typeof req.file != "undefined"){
         let url = req.file.path;
         let filename = req.file.filename;
@@ -68,8 +83,40 @@ module.exports.updateListing = async (req, res) => {
 
 module.exports.destroyListing = async (req, res) => {
     let {id} = req.params;
-    let deletedListing = await Listing.findByIdAndDelete(id);
-    console.log(deletedListing);
+    await Listing.findByIdAndDelete(id);
     req.flash("success", "Listing Deleted!");
     res.redirect("/listings");
+};
+
+module.exports.searchListings = async (req, res) => {
+    let search = req.query.search;
+    if(search.trim().length > 0) {      // If search string is not empty and not just spaces
+        const foundListings = await Listing.find({
+            $or: [
+                  { title: { $regex: search, $options: 'i' } },
+                  { location: { $regex: search, $options: 'i' } },
+                  { country: { $regex: search, $options: 'i' } }
+                ]
+        }).populate("reviews");
+        setGuestFavouriteStatus(foundListings);
+        res.render("listings/index.ejs", { allListings: foundListings });
+    }
+    res.redirect("/listings");
+};
+
+module.exports.filterByCategory = async (req, res) => {
+    let { category } = req.params;
+    const filteredListings = await Listing.find({ category: { $in: [category] } }).populate("reviews");
+    setGuestFavouriteStatus(filteredListings);
+    res.render("listings/categoryWise.ejs", { filteredListings, currUser: req.user, selectedCategory: category });
+};
+
+module.exports.renderBookingForm = async (req, res) => {
+    let { id } = req.params;
+    let listing = await Listing.findById(id);
+    if(!listing) {
+        req.flash("error", "Listing you requested for does not exist!");
+        res.redirect("/listings");
+    }
+    res.render("listings/book.ejs", { listing, currUser: req.user });
 };

@@ -15,6 +15,42 @@
             <p class="card-text">&#8377; <%=listing.price.toLocaleString("en-IN")%></p>
             <p class="card-text"><%=listing.location%></p>
             <p class="card-text"><%=listing.country%></p>
+            <div class="bookAndWishBtnsContainer">
+
+                <% if (!currUser) { %>
+                    <form method="GET" action="/listings/<%= listing._id %>/book">
+                        <button class="btn showPageBtn">Book Now</button>
+                    </form>
+                <% } else { %>
+                    <% if (currUser && !currUser._id.equals(listing.owner._id)) { %>
+                        <form method="GET" action="/listings/<%= listing._id %>/book">
+                            <button class="btn showPageBtn">Book Now</button>
+                        </form>
+                    <% } %>
+                <% } %>
+
+                
+                <% if (!currUser) { %>
+                    <form method="POST" action="/wishlist/<%= listing._id %>">
+                        <button class="btn btn-outline-primary">Add to Wishlist</button>
+                    </form>
+                <% } else { %>
+                    <% if(currUser && !currUser._id.equals(listing.owner._id)) { %>
+                        <% if (currUser.wishlist.includes(listing._id.toString())) { %>
+                            <form method="POST" action="/wishlist/<%= listing._id %>?_method=DELETE" style="display: inline;">
+                                <button class="btn btn-outline-primary">Remove from Wishlist</button>
+                            </form>
+                        <% } else { %>
+                            <% if (!currUser._id.equals(listing.owner._id)) { %>
+                                <form method="POST" action="/wishlist/<%= listing._id %>">
+                                    <button class="btn btn-outline-primary">Add to Wishlist</button>
+                                </form>
+                            <% } %>
+                        <% } %>
+                    <% } %>
+                <% } %>
+                    
+            </div>
         </div>
     </div>
     <br>
@@ -70,9 +106,11 @@
                         <p class="starability-result card-text" data-rating="<%=review.rating%>"></p>
                         <p class="card-text"><%=review.comment%></p>
                     </div>
-                    <form class="mb-3 mt-3" method="POST" action="/listings/<%=listing._id %>/reviews/<%= review._id%>?_method=DELETE">
-                        <button class="btn btn-sm btn-dark">Delete</button>
-                    </form>
+                    <% if(currUser && currUser._id.equals(review.author._id)) {%>
+                        <form class="mb-3 mt-3" method="POST" action="/listings/<%=listing._id %>/reviews/<%= review._id%>?_method=DELETE">
+                            <button class="btn btn-sm btn-dark">Delete</button>
+                        </form>
+                    <% } %>
                 </div>
             <% } %>
         </div>

@@ -11,6 +11,23 @@ const userSchema = new Schema({
         type: String,
         required: true
     },
+    role: {
+        type: String,
+        enum: ["host", "guest"],
+        default: "guest",
+    },
+    wishlist: [
+        {
+            type: Schema.Types.ObjectId,
+            ref: "Listing",
+        },
+    ],
+    bookings: [
+        {
+            type: Schema.Types.ObjectId,
+            ref: "Booking",
+        },
+    ],
 });
 
 userSchema.plugin(passportLocalMongoose);

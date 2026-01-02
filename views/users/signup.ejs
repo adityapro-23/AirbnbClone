@@ -17,6 +17,14 @@
                 <label for="password" class="form-label">Password</label>
                 <input type="password" name="password" id="password" class="form-control" required>
             </div>
+            <div class="mb-3">
+                <label for="role" class="form-label">Register as:</label>
+                <select name="role" class="form-select" required>
+                    <option selected>Select Role</option>
+                    <option value="guest">Guest</option>
+                    <option value="host">Host</option>
+                </select>
+            </div>
             <button class="btn btn-success">SignUp</button>
         </form>
     </div>

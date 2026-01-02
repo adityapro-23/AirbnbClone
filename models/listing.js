@@ -34,7 +34,33 @@ const listingSchema = new Schema({
         coordinates: {
             type: [Number],
             required: true,
-        }, 
+        },  
+    },
+    category: {
+        type: [String], //An array of strings
+        enum: [
+            "Trending", 
+            "Rooms",
+            "Iconic cities", 
+            "Mountains", 
+            "Castles", 
+            "Amazing pools",
+            "Camping",
+            "Farms",
+            "Arctic",
+            "Boats",
+        ],
+        required: true,
+    },
+    bookings: [
+        {
+            type: Schema.Types.ObjectId,
+            ref: "Booking",
+        },
+    ],
+    instantBooking: {
+        type: Boolean,
+        default: false,
     },
 });
 

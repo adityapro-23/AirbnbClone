@@ -1,0 +1,49 @@
+<% layout("/layouts/boilerplate") %>
+
+<h1>Book <%= listing.title %></h1>
+
+<form action="/bookings/<%= listing._id %>" method="POST">
+    <div class="mb-3">
+        <label for="startDate" class="form-label">Start Date</label>
+        <input type="date" class="form-control" id="startDate" name="startDate" required>
+    </div>
+    <div class="mb-3">
+        <label for="endDate" class="form-label">End Date</label>
+        <input type="date" class="form-control" id="endDate" name="endDate" required>
+    </div>
+    <div class="mb-3">
+        <label>Total Price: </label>
+        <span id="totalPrice">&#8377 0</span>
+    </div>
+    <button type="submit" id="confirmBookingBtn" class="btn btn-primary" style="display: none;">Confirm Booking</button>
+</form>
+
+<input type="hidden" id="listingPrice" value="<%= listing.price %>">
+<script>
+    const pricePerNight = Number(document.getElementById('listingPrice').value);
+    const startInput = document.getElementById('startDate');
+    const endInput = document.getElementById('endDate');
+    const totalPriceSpan = document.getElementById('totalPrice');
+    const confirmBtn = document.getElementById('confirmBookingBtn');
+
+    function updateTotalPrice() {
+        const start = new Date(startInput.value);
+        const end = new Date(endInput.value);
+        if (startInput.value && endInput.value && end >= start) {
+            const diffTime = Math.abs(end - start);
+            const diffDays = Math.max(
+                1,
+                Math.ceil(diffTime / (1000 * 60 * 60 * 24))
+            );
+            const total = diffDays * pricePerNight;
+            totalPriceSpan.textContent = `₹${total.toLocaleString("en-IN")}`;
+            confirmBtn.style.display = 'block';
+        } else {
+            totalPriceSpan.textContent = "₹0";
+            confirmBtn.style.display = 'none';
+        }
+    }
+
+    startInput.addEventListener('change', updateTotalPrice);
+    endInput.addEventListener('change', updateTotalPrice);
+</script>
