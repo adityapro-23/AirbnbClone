@@ -7,7 +7,7 @@ module.exports.createBooking = async (req, res) => {
     const { startDate, endDate } = req.body;
     if(startDate > endDate) {
         req.flash("error", "End date must be after start date!")
-        return res.status(400);
+        return res.status(400).redirect("back");
     }
     const { user } = req;
     const listing = await Listing.findById(id);
@@ -69,8 +69,7 @@ module.exports.createBooking = async (req, res) => {
     }
 
     req.flash("success", listing.instantBooking ? "Booking confirmed!" : "Booking request sent to the host!");
-    //res.render("users/bookings.ejs", {listing, newBooking});
-    this.showBookings(req, res);
+    return res.redirect("/bookings")
 };
 
 module.exports.showBookings = async (req, res) => {

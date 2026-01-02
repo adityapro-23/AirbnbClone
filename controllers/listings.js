@@ -19,7 +19,7 @@ module.exports.showListing = async (req, res) => {
     const listing = await Listing.findById(id).populate({path: "reviews", populate: {path: "author",},}).populate("owner");
     if(!listing) {
         req.flash("error", "Listing you requrested for does not exist!");
-        res.redirect("/lisings");   
+        return res.redirect("/lisings");   
     }
     res.render("listings/show.ejs", { listing, currUser: req.user });
 };
@@ -49,7 +49,7 @@ module.exports.renderEditForm = async (req, res) => {
     const listing = await Listing.findById(id);
     if(!listing) {
         req.flash("error", "Listing you requested for does not exist!");
-        res.redirect("/lisings");   
+        return res.redirect("/lisings");   
     }; 
     let originalImageUrl = listing.image.url;
     originalImageUrl = originalImageUrl.replace("/upload", "/upload/w_250");
@@ -99,7 +99,7 @@ module.exports.searchListings = async (req, res) => {
                 ]
         }).populate("reviews");
         setGuestFavouriteStatus(foundListings);
-        res.render("listings/index.ejs", { allListings: foundListings });
+        return res.render("listings/index.ejs", { allListings: foundListings });
     }
     res.redirect("/listings");
 };
@@ -116,7 +116,7 @@ module.exports.renderBookingForm = async (req, res) => {
     let listing = await Listing.findById(id);
     if(!listing) {
         req.flash("error", "Listing you requested for does not exist!");
-        res.redirect("/listings");
+        return res.redirect("/listings");
     }
     res.render("listings/book.ejs", { listing, currUser: req.user });
 };
