@@ -15,6 +15,7 @@ const flash = require("connect-flash");
 const passport = require("passport");
 const LocalStrategy = require("passport-local");
 const User = require("./models/user.js");
+const startAgenda = require("./utils/agenda.js");
 
 const listingRouter = require("./routes/listing.js");
 const reviewRouter = require("./routes/review.js");
@@ -37,6 +38,8 @@ main().then(() => {
 })
 async function main() {
     await mongoose.connect(dbUrl);
+    await startAgenda();
+    console.log("Agenda Scheduler started!");
 }
 
 const store = MongoStore.create({
