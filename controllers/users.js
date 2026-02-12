@@ -10,15 +10,17 @@ module.exports.signup = async (req, res) => {
 
         // Check: If username already exists
         const existingUsername = await User.findOne({ username });
+        console.log(existingUsername)
         if(existingUsername) {
             req.flash("error", "An account with this username already exists.");
             return res.redirect("/signup");
         }
 
         // Check: If email already exists
-        const existingEmail = User.findOne({ email });
+        const existingEmail = await User.findOne({ email });
+        console.log(existingEmail);
         if(existingEmail) {
-            req.flash("error", "An account with this email already exists.")
+            req.flash("error", "An account with this email already exists.");
             return res.redirect("/signup");
         }
 
