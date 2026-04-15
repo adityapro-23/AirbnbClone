@@ -103,7 +103,7 @@ app.use("/", userRouter);
 app.use("/listings", listingRouter);
 app.use("/listings/:id/reviews", reviewRouter);
 app.use("/bookings", bookingRouter);
-app.use("/host", dashboardRouter);
+app.use("/dashboard", dashboardRouter);
 
 
 app.all("*", (req, res, next) => {

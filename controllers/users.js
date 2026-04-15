@@ -85,9 +85,9 @@ module.exports.removeFromWishList = async (req, res) => {
     return res.redirect(redirectUrl);
 };
 
-module.exports.showDashboard = async(req, res) => {
-    res.render("users/dashboard.ejs");
-}
+// module.exports.showDashboard = async(req, res) => {
+//     res.render("users/dashboard.ejs");
+// }
 
 module.exports.showHelp = async(req, res) => {
     res.render("users/help.ejs")

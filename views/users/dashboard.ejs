@@ -101,7 +101,7 @@
     // 2. The AJAX Fetch Function
     async function fetchDashboardData() {
         try {
-            const response = await fetch('/host/api/stats');
+            const response = await fetch('/dashboard/api/stats');
             const data = await response.json();
 
             // A. Update KPI Cards

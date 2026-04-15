@@ -21,7 +21,7 @@ router.route("/wishlist/:id")
     .post(isLoggedIn, wrapAsync(userController.addToWishlist))
     .delete(isLoggedIn, wrapAsync(userController.removeFromWishList));
 
-router.get("/dashboard", isLoggedIn, wrapAsync(userController.showDashboard));
+// router.get("/dashboard", isLoggedIn, wrapAsync(userController.showDashboard));
 
 router.get("/help", wrapAsync(userController.showHelp));
 router.get("/privacy", wrapAsync(userController.showPrivacyPolicy));
