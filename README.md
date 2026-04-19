@@ -1,6 +1,6 @@
-# Airbnb Clone
+# Vistayr
 
-A full-featured property rental web application built with Node.js, Express, and MongoDB. This project replicates the core functionality of Airbnb, allowing users to list properties, search for rentals, and manage bookings.
+A full-featured property rental web application built with Node.js, Express, and MongoDB. Vistayr is a modern accommodation booking platform that allows users to list properties, search for rentals, and manage bookings seamlessly.
 
 ## 📋 Table of Contents
 
@@ -106,8 +106,8 @@ Before you begin, ensure you have the following installed:
 
 ### Step 1: Clone the Repository
 ```bash
-git clone https://github.com/yourusername/airbnb-clone.git
-cd airbnb-clone
+git clone https://github.com/yourusername/vistayr.git
+cd vistayr
 ```
 
 ### Step 2: Install Dependencies
@@ -120,7 +120,7 @@ Create a `.env` file in the root directory with the following variables:
 
 ```env
 NODE_ENV=production
-ATLASDB_URL=mongodb+srv://username:password@cluster.mongodb.net/airbnbclone
+ATLASDB_URL=mongodb+srv://username:password@cluster.mongodb.net/vistayr
 SECRET=your_secret_key_here
 
 # Cloudinary Configuration
@@ -219,7 +219,7 @@ The server will start on `http://localhost:8080`
 ## 📁 Project Structure
 
 ```
-airbnb-clone/
+vistayr/
 ├── controllers/          # Business logic for routes
 │   ├── listings.js
 │   ├── bookings.js
@@ -291,7 +291,7 @@ If you encounter any issues or have questions, please:
 
 ## 🙏 Acknowledgments
 
-- Inspired by Airbnb
+- Vistayr - A modern accommodation booking platform
 - Built with Express.js documentation
 - Cloudinary for image hosting
 - Mapbox for mapping services
